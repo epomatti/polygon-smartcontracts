@@ -44,30 +44,30 @@ npx hardhat create-metadata
 # mint an nft token
 npx hardhat mint \
   --contract-name MyNFT \
-  --contract-address '0x...' \
-  --metadata-url 'ipfs://.../metadata.json'
+  --contract-address '0x123456789' \
+  --metadata-url 'ipfs://abcdef/metadata.json'
 
 # update an nft token with a new metadata url
 npx hardhat update-metadata-url \
   --contract-name MyNFT \
-  --contract-address '0x...' \
-  --metadata-url 'ipfs://.../metadata.json' \
+  --contract-address '0x123456789' \
+  --metadata-url 'ipfs://abcdef/metadata.json' \
   --token-id 0
 
 # transfer the token
 npx hardhat transfer \
---contract-name MyNFT \
---contract-address '0x...' \
---fromAddr '0x...' \
---toAddr '0x...' \
---token-id 0
+  --contract-name MyNFT \
+  --contract-address '0x123456789' \
+  --fromAddr '0x123456789' \
+  --toAddr '0x123456789' \
+  --token-id 0
 ```
 
 Special code in the contract to allow the burn of the NFT even after transferring it:
 
 ```sh
 npx hardhat burn \
-  --contract-address '0x_CONTRACT_ADDRESS' \
+  --contract-address '0x123456789' \
   --contract-name 'MyNFT' \
   --token-id 0
 ```
