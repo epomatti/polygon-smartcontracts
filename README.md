@@ -1,4 +1,15 @@
-# Basic Sample Hardhat Project
+# Hardhat Polygon Smart Contracts <img src=".docs/polygon.png" width=20 />
+
+ERC20 and ERC721 code using Hardhat tasks. Operations:
+
+- Deploy contracts
+- Upload IPFS NFT metadata
+- Mint tokens
+- Update metadata
+- Transfer NFT tokens
+- Burn NFT tokens (even without ownership)
+
+<img src="assets/kitty.png" width=200/>
 
 ## Setup
 
@@ -16,14 +27,12 @@ Setup the `.env` configuration:
 cp .env.sample .env
 ```
 
-Add the Polygon private key.
+1. Add the Polygon account private key.
+2. Create and add the [NFT.Storage](https://nft.storage/) API Key.
 
-Create and add the [NFT.Storage](https://nft.storage/) API Key.
+## Usage
 
-## Tasks
-
-### ERC721 (NFT)
-
+Operations implemented with Hardhat tasks in the the `hardhat.config.js`.
 
 ```sh
 # deploy the nft contract
@@ -35,10 +44,28 @@ npx hardhat create-metadata
 # mint an nft token
 npx hardhat mint \
   --contract-name MyNFT \
-  --contract-address '0x_CONTRACT_ADDRESS' \
-  --metadata-url 'ipfs://....../metadata.json'
+  --contract-address '0x...' \
+  --metadata-url 'ipfs://.../metadata.json'
 
-# burn the token using privileged permissions in the contract
+# update an nft token with a new metadata url
+npx hardhat update-metadata-url \
+  --contract-name MyNFT \
+  --contract-address '0x...' \
+  --metadata-url 'ipfs://.../metadata.json' \
+  --token-id 0
+
+# transfer the token
+npx hardhat transfer \
+--contract-name MyNFT \
+--contract-address '0x...' \
+--fromAddr '0x...' \
+--toAddr '0x...' \
+--token-id 0
+```
+
+Special code in the contract to allow the burn of the NFT even after transferring it:
+
+```sh
 npx hardhat burn \
   --contract-address '0x_CONTRACT_ADDRESS' \
   --contract-name 'MyNFT' \

@@ -47,6 +47,33 @@ task("mint", "Mint an NFT")
     console.log("NFT minted to: ", owner.address)
   });
 
+task("update-metadata-url", "Update an NFT token with a new metadata URL")
+  .addParam("contractName", "The contract name to generate the factory")
+  .addParam("contractAddress", "The account's address")
+  .addParam("metadataUrl", "The IPFS metadata URL")
+  .addParam("tokenId", "The NFT token ID")
+  .setAction(async (taskArgs) => {
+    const { contractName, contractAddress, metadataUrl, tokenId } = taskArgs;
+    const Contract = await ethers.getContractFactory(contractName);
+    const contract = await Contract.attach(contractAddress);
+    await contract.setTokenURI(tokenId, metadataUrl);
+    console.log(`Updated Token URI: ${tokenId}`);
+  });
+
+task("transfer", "Transfer an NFT")
+  .addParam("contractName", "The contract name to generate the factory")
+  .addParam("contractAddress", "The account's address")
+  .addParam("fromAddr", "Origin contract")
+  .addParam("toAddr", "Destination contract")
+  .addParam("tokenId", "The NFT token id to be transferred")
+  .setAction(async (taskArgs) => {
+    const { contractName, contractAddress, fromAddr, toAddr, tokenId } = taskArgs;
+    const Contract = await ethers.getContractFactory(contractName);
+    const contract = await Contract.attach(contractAddress);
+    await contract['safeTransferFrom(address,address,uint256)'](fromAddr, toAddr, tokenId);
+    console.log("Transferred");
+  });
+
 task("burn", "Burn a token")
   .addParam("contractAddress", "The account's address")
   .addParam("tokenId", "The NFT token id")
