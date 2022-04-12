@@ -1,4 +1,4 @@
-# Hardhat Polygon Smart Contracts <img src=".docs/polygon.png" width=20 />
+# Polygon Smart Contracts <img src=".docs/polygon.png" width=20 />
 
 ERC20 and ERC721 code using Hardhat tasks. Operations:
 
